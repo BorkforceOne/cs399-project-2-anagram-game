@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cs399-project-2-anagram-game.iml" filepath="$PROJECT_DIR$/cs399-project-2-anagram-game.iml" />
+    </modules>
+  </component>
+</project>
