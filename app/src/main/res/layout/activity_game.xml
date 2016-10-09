@@ -26,24 +26,68 @@
         android:layout_marginBottom="10dp"
         android:layout_centerHorizontal="true" />
 
-    <org.apmem.tools.layouts.FlowLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:id="@+id/inputLettersLayout">
+        android:orientation="vertical"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/guessLinearLayout">
 
-    </org.apmem.tools.layouts.FlowLayout>
+        <TextView
+            android:text="Guess"
+            android:textSize="20sp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
 
-    <org.apmem.tools.layouts.FlowLayout
+            android:id="@+id/textView3" />
+
+        <org.apmem.tools.layouts.FlowLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:minHeight="100dp"
+            android:id="@+id/guessLettersLayout">
+
+        </org.apmem.tools.layouts.FlowLayout>
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/inputLettersLayout"
-        android:gravity="center"
-        android:orientation="horizontal"
+        android:layout_below="@id/guessLinearLayout"
         android:paddingBottom="90dp"
-        android:id="@+id/guessLettersLayout">
-    </org.apmem.tools.layouts.FlowLayout>
+        android:orientation="vertical">
+        <TextView
+            android:text="Letter Rack"
+            android:textSize="20sp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <org.apmem.tools.layouts.FlowLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:minHeight="100dp"
+            android:id="@+id/inputLettersLayout">
+        </org.apmem.tools.layouts.FlowLayout>
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:layout_above="@id/guessLinearLayout"
+        android:layout_marginBottom="30dp"
+        android:layout_centerHorizontal="true"
+        android:onClick="checkAnagram"/>
 
 </RelativeLayout>
