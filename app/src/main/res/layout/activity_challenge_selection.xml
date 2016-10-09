@@ -22,7 +22,7 @@
         android:hint="Challenge Seed"
         android:inputType="textNoSuggestions"
         android:ems="10"
-        android:id="@+id/editText"
+        android:id="@+id/seedText"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:textAlignment="center"
@@ -32,9 +32,9 @@
         android:text="Play"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editText"
+        android:layout_below="@+id/seedText"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="11dp"/>
+        android:onClick="gotoGame"/>
 
     <Button
         android:text="About"
