@@ -28,20 +28,20 @@ android:orientation="vertical">
         android:orientation="vertical">
         <TextView
             android:layout_width="wrap_content"
-            android:text="Found Words: 3"
+            android:text="Found Words: "
             android:layout_height="wrap_content"
             android:paddingBottom="20dp"
             android:id="@+id/CorrectTextView" />
 
         <TextView
-            android:text="Incorrect Words: 4"
+            android:text="Incorrect Words: "
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="20dp"
             android:id="@+id/IncorrectTextView" />
 
         <TextView
-            android:text="Missed Words: 10"
+            android:text="Missed Words: "
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="20dp"
