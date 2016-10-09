@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import org.apmem.tools.layouts.FlowLayout;
 
@@ -20,12 +21,12 @@ import java.util.Random;
 
 public class GameActivity extends AppCompatActivity {
     private Random random;
-    private ArrayList<String> letterRack;
-    private ArrayList<String> guessRack;
+    private List<String> letterRack;
+    private List<String> guessRack;
     private FlowLayout letterLayout;
     private FlowLayout guessLayout;
-    private ArrayList<String> correctWords;
-    private ArrayList<String> incorrectWords;
+    private List<String> correctWords;
+    private List<String> incorrectWords;
     private int timeLimit = 30000;
 
     @Override
@@ -37,6 +38,8 @@ public class GameActivity extends AppCompatActivity {
         letterLayout = (FlowLayout)findViewById(R.id.inputLettersLayout);
         guessRack = new ArrayList<String>();
         guessLayout = (FlowLayout)findViewById(R.id.guessLettersLayout);
+        correctWords = new ArrayList<String>();
+        incorrectWords = new ArrayList<String>();
 
         String challengeSeed = getIntent().getExtras().getString("challengeSeed");
 
@@ -53,7 +56,7 @@ public class GameActivity extends AppCompatActivity {
             addLetterToRack(letterRack, c);
         }
 
-        Handler timerHandler = new Handler();
+        final Handler timerHandler = new Handler();
         Runnable timerRunnable = new Runnable() {
             @Override
             public void run() {
@@ -61,6 +64,9 @@ public class GameActivity extends AppCompatActivity {
                     gotoResultScreen();
                 else {
                     timeLimit -= 100;
+                    ProgressBar pb = (ProgressBar) findViewById(R.id.progressBar4);
+                    pb.setProgress(timeLimit);
+                    timerHandler.postDelayed(this, 100);
                 }
             }
         };
@@ -83,9 +89,9 @@ public class GameActivity extends AppCompatActivity {
         return new String( a );
     }
 
-    public void addLetterToRack(final ArrayList<String> rackTo, final char letter) {
+    public void addLetterToRack(final List<String> rackTo, final char letter) {
         final FlowLayout layoutTo;
-        final ArrayList<String> rackFrom;
+        final List<String> rackFrom;
         if (rackTo == this.letterRack){
             layoutTo = this.letterLayout;
             rackFrom = this.guessRack;
@@ -131,6 +137,7 @@ public class GameActivity extends AppCompatActivity {
             guess = guess.concat(c);
         }
         if (WordList.getInstance().isValidWord(guess) && !correctWords.contains(guess)) {
+            timeLimit+=5000;
             System.out.println("FOUND WORD");
             correctWords.add(guess);
         }
