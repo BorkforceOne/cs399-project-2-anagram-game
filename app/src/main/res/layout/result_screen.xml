@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Anagramz"
+        android:layout_marginTop="15dp"
+        android:textSize="75sp"
+        android:gravity="center"
+        android:paddingBottom="20dp"
+        android:id="@+id/textTitle" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="32dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Found Words: 3"
+            android:layout_height="wrap_content"
+            android:paddingBottom="20dp"
+            android:id="@+id/CorrectTextView" />
+
+        <TextView
+            android:text="Incorrect Words: 4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="20dp"
+            android:id="@+id/IncorrectTextView" />
+
+        <TextView
+            android:text="Missed Words: 10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="20dp"
+            android:id="@+id/RemainingTextView" />
+
+        <TextView
+            android:text="ATOMS, MOTE, MATE, MAYS, EAST..."
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="40dp"
+            android:id="@+id/MissedTextView" />
+
+        <TextView
+            android:text="Total Score: 20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="20dp"
+            android:id="@+id/TotalTextView" />
+    </LinearLayout>
+
+
+
+
+</LinearLayout>
