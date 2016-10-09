@@ -66,4 +66,12 @@ public class WordList {
         index = Math.abs(index) % (words.size()-1);
         return words.get(index);
     }
+
+    public boolean isValidWord(String word){
+        String key = word.toUpperCase();
+        char[] chars = key.toCharArray();
+        Arrays.sort(chars);
+        String sortedKey = new String(chars);
+        return anagrams.get(sortedKey).contains(word);
+    }
 }
