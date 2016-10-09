@@ -63,6 +63,7 @@ public class WordList {
     }
 
     public String getWordAt(int index){
+        index = Math.abs(index) % (words.size()-1);
         return words.get(index);
     }
 }
