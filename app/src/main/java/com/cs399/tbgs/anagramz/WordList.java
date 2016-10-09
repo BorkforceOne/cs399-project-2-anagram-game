@@ -72,6 +72,9 @@ public class WordList {
         char[] chars = key.toCharArray();
         Arrays.sort(chars);
         String sortedKey = new String(chars);
-        return anagrams.get(sortedKey).contains(word);
+        if(anagrams.containsKey(sortedKey))
+            return anagrams.get(sortedKey).contains(word);
+        else
+            return false;
     }
 }
