@@ -19,6 +19,7 @@ import java.util.Random;
 
 public class GameActivity extends AppCompatActivity {
     private Random random;
+    private int timeLimit = 30000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,10 +60,14 @@ public class GameActivity extends AppCompatActivity {
         Runnable timerRunnable = new Runnable() {
             @Override
             public void run() {
-                gotoResultScreen();
+                if(timeLimit<=0)
+                    gotoResultScreen();
+                else {
+                    timeLimit -= 100;
+                }
             }
         };
-        timerHandler.postDelayed(timerRunnable, 30000);
+        timerHandler.postDelayed(timerRunnable, 100);
     }
 
     private static String scramble( Random random, String inputString )
