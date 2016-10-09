@@ -12,6 +12,7 @@ import android.widget.EditText;
 
 import org.apmem.tools.layouts.FlowLayout;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -19,6 +20,12 @@ import java.util.Random;
 
 public class GameActivity extends AppCompatActivity {
     private Random random;
+    private ArrayList<String> letterRack;
+    private ArrayList<String> guessRack;
+    private FlowLayout letterLayout;
+    private FlowLayout guessLayout;
+    private ArrayList<String> correctWords;
+    private ArrayList<String> incorrectWords;
     private int timeLimit = 30000;
 
     @Override
@@ -26,34 +33,24 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        letterRack = new ArrayList<String>();
+        letterLayout = (FlowLayout)findViewById(R.id.inputLettersLayout);
+        guessRack = new ArrayList<String>();
+        guessLayout = (FlowLayout)findViewById(R.id.guessLettersLayout);
+
         String challengeSeed = getIntent().getExtras().getString("challengeSeed");
 
         // Create and setup our random number generator
         this.random = new Random(challengeSeed.hashCode());
 
-        final FlowLayout inputLayout = (FlowLayout)findViewById(R.id.inputLettersLayout);
-        final FlowLayout guessLayout = (FlowLayout)findViewById(R.id.guessLettersLayout);
-        final GameActivity game = this;
+        GameActivity game = this;
 
         String input = WordList.getInstance().getWordAt(this.random.nextInt());
         input = scramble(this.random, input);
 
-
-        for (char letter: input.toCharArray()) {
-            final String s = String.valueOf(letter);
-            final Button letterButton = new Button(this);
-            letterButton.setText(s);
-            letterButton.setLayoutParams(new ViewGroup.LayoutParams(150, 150));
-            letterButton.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    inputLayout.removeView(v);
-                    Button guessButton = new Button(game);
-                    guessButton.setText(s);
-                    guessButton.setLayoutParams(new ViewGroup.LayoutParams(150, 150));
-                    guessLayout.addView(guessButton);
-                }
-            });
-            inputLayout.addView(letterButton);
+        for (char c: input.toCharArray()) {
+            letterRack.add(String.valueOf(c));
+            addLetterToRack(letterRack, c);
         }
 
         Handler timerHandler = new Handler();
@@ -86,11 +83,60 @@ public class GameActivity extends AppCompatActivity {
         return new String( a );
     }
 
+    public void addLetterToRack(final ArrayList<String> rackTo, final char letter) {
+        final FlowLayout layoutTo;
+        final ArrayList<String> rackFrom;
+        if (rackTo == this.letterRack){
+            layoutTo = this.letterLayout;
+            rackFrom = this.guessRack;
+        }
+        else if (rackTo == this.guessRack){
+            layoutTo = this.guessLayout;
+            rackFrom = this.letterRack;
+        }
+        else {
+            throw new Error("Unknown rack provided");
+        }
+
+        String s = String.valueOf(letter);
+        Button letterButton = new Button(this);
+        letterButton.setText(s);
+        letterButton.setLayoutParams(new ViewGroup.LayoutParams(150, 150));
+        letterButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                FlowLayout parentLayout = (FlowLayout) v.getParent();
+                Button button = (Button) v;
+                parentLayout.removeView(button);
+
+                rackTo.remove(String.valueOf(letter));
+                addLetterToRack(rackFrom, letter);
+            }
+        });
+        layoutTo.addView(letterButton);
+
+        rackTo.add(String.valueOf(letter));
+    }
+
     public void gotoResultScreen() {
         Intent intent = new Intent(this, ResultActivity.class);
         intent.putExtra("foundWords", ""+1);
         intent.putExtra("incorrectWords", ""+2);
         intent.putExtra("missedWords", ""+0);
         startActivity(intent);
+    }
+
+    public void checkAnagram(View view) {
+        String guess = "";
+        for (String c: guessRack) {
+            guess = guess.concat(c);
+        }
+        if (WordList.getInstance().isValidWord(guess) && !correctWords.contains(guess)) {
+            System.out.println("FOUND WORD");
+            correctWords.add(guess);
+        }
+        else {
+            System.out.println("NOT A WORD");
+            incorrectWords.add(guess);
+        }
     }
 }
