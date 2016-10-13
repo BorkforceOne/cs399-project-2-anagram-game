@@ -15,7 +15,10 @@ public class ResultActivity extends AppCompatActivity {
         correctTV.setText(correctTV.getText()+getIntent().getExtras().getString("foundWords"));
         TextView incorrectTV = (TextView)findViewById(R.id.IncorrectTextView);
         incorrectTV.setText(incorrectTV.getText()+getIntent().getExtras().getString("incorrectWords"));
-        TextView missedTV = (TextView)findViewById(R.id.RemainingTextView);
-        missedTV.setText(missedTV.getText()+getIntent().getExtras().getString("missedWords"));
+        /*TextView missedTV = (TextView)findViewById(R.id.RemainingTextView);
+        missedTV.setText(missedTV.getText()+getIntent().getExtras().getString("nMissedWords"));
+
+        TextView missedWordsTV = (TextView)findViewById(R.id.MissedTextView);
+        missedWordsTV.setText(getIntent().getExtras().getString("missedWords"));*/
     }
 }

@@ -125,9 +125,8 @@ public class GameActivity extends AppCompatActivity {
 
     public void gotoResultScreen() {
         Intent intent = new Intent(this, ResultActivity.class);
-        intent.putExtra("foundWords", ""+1);
-        intent.putExtra("incorrectWords", ""+2);
-        intent.putExtra("missedWords", ""+0);
+        intent.putExtra("foundWords", ""+correctWords.size());
+        intent.putExtra("incorrectWords", ""+incorrectWords.size());
         startActivity(intent);
     }
 

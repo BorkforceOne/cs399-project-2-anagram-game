@@ -41,14 +41,14 @@ android:orientation="vertical">
             android:id="@+id/IncorrectTextView" />
 
         <TextView
-            android:text="Missed Words: "
+            android:text=""
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="20dp"
             android:id="@+id/RemainingTextView" />
 
         <TextView
-            android:text="ATOMS, MOTE, MATE, MAYS, EAST..."
+            android:text=""
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="40dp"
