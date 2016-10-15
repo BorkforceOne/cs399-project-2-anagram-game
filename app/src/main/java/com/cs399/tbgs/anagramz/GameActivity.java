@@ -5,13 +5,18 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutCompat;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
+import android.widget.TextView;
 
 import org.apmem.tools.layouts.FlowLayout;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,12 +26,12 @@ import java.util.Random;
 
 public class GameActivity extends AppCompatActivity {
     private Random random;
-    private List<String> letterRack;
-    private List<String> guessRack;
+    private ArrayList<String> letterRack;
+    private ArrayList<String> guessRack;
     private FlowLayout letterLayout;
     private FlowLayout guessLayout;
-    private List<String> correctWords;
-    private List<String> incorrectWords;
+    private ArrayList<String> correctWords;
+    private ArrayList<String> incorrectWords;
     private int timeLimit = 30000;
 
     @Override
@@ -46,8 +51,6 @@ public class GameActivity extends AppCompatActivity {
         // Create and setup our random number generator
         this.random = new Random(challengeSeed.hashCode());
 
-        GameActivity game = this;
-
         String input = WordList.getInstance().getWordAt(this.random.nextInt());
         input = scramble(this.random, input);
 
@@ -64,8 +67,10 @@ public class GameActivity extends AppCompatActivity {
                     gotoResultScreen();
                 else {
                     timeLimit -= 100;
-                    ProgressBar pb = (ProgressBar) findViewById(R.id.progressBar4);
+                    ProgressBar pb = (ProgressBar) findViewById(R.id.timeProgressBar);
+                    TextView tv = (TextView) findViewById(R.id.timeString);
                     pb.setProgress(timeLimit);
+                    tv.setText(timeToString(timeLimit) + " remaining");
                     timerHandler.postDelayed(this, 100);
                 }
             }
@@ -91,7 +96,7 @@ public class GameActivity extends AppCompatActivity {
 
     public void addLetterToRack(final List<String> rackTo, final char letter) {
         final FlowLayout layoutTo;
-        final List<String> rackFrom;
+        final ArrayList<String> rackFrom;
         if (rackTo == this.letterRack){
             layoutTo = this.letterLayout;
             rackFrom = this.guessRack;
@@ -107,7 +112,12 @@ public class GameActivity extends AppCompatActivity {
         String s = String.valueOf(letter);
         Button letterButton = new Button(this);
         letterButton.setText(s);
-        letterButton.setLayoutParams(new ViewGroup.LayoutParams(150, 150));
+        int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics());
+        int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics());
+        FlowLayout.LayoutParams layoutParams = new FlowLayout.LayoutParams(width, height);
+        int margin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 0, getResources().getDisplayMetrics());
+        layoutParams.setMargins(margin, margin, margin, margin);
+        letterButton.setLayoutParams(layoutParams);
         letterButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 FlowLayout parentLayout = (FlowLayout) v.getParent();
@@ -125,24 +135,67 @@ public class GameActivity extends AppCompatActivity {
 
     public void gotoResultScreen() {
         Intent intent = new Intent(this, ResultActivity.class);
-        intent.putExtra("foundWords", ""+correctWords.size());
-        intent.putExtra("incorrectWords", ""+incorrectWords.size());
+        intent.putStringArrayListExtra("correctWords", correctWords);
+        intent.putStringArrayListExtra("incorrectWords", incorrectWords);
         startActivity(intent);
     }
 
+    public String timeToString(int timeMS) {
+        String timeString = "";
+        int seconds = (timeMS/1000) % 60;
+        int minutes = ((timeMS/1000)/60) % 60;
+        int hours = (((timeMS/1000)/60)/24) % 60;
+
+        if (hours != 0) {
+            timeString += hours + " hours";
+        }
+        if (minutes != 0) {
+            timeString += minutes + " minutes";
+        }
+
+        timeString += seconds + " seconds";
+
+        return timeString;
+    }
+
     public void checkAnagram(View view) {
+        final TextView mTextHistory = (TextView) findViewById(R.id.historyText);
+        final ScrollView mScrollView = (ScrollView) findViewById(R.id.historyScroller);
+
+        String newLine = "\n";
         String guess = "";
+
+        if (guessRack.size() == 0)
+            return;
+
         for (String c: guessRack) {
             guess = guess.concat(c);
         }
-        if (WordList.getInstance().isValidWord(guess) && !correctWords.contains(guess)) {
-            timeLimit+=5000;
-            System.out.println("FOUND WORD");
+
+        if (correctWords.size() + incorrectWords.size() == 0) {
+            newLine = "";
+        }
+
+        if (correctWords.contains(guess) || incorrectWords.contains(guess)) {
+            incorrectWords.add(guess);
+            mTextHistory.append(newLine + "You already guessed " + guess + "!");
+        }
+        else if (WordList.getInstance().isValidWord(guess)) {
+            timeLimit += 1000 * guessRack.size();
             correctWords.add(guess);
+            mTextHistory.append(newLine + "Correct word " + guess + " +" + guessRack.size() + " seconds");
         }
         else {
-            System.out.println("NOT A WORD");
             incorrectWords.add(guess);
+            mTextHistory.append(newLine + "Incorrect word " + guess + "");
         }
+
+        mScrollView.post(new Runnable()
+        {
+            public void run()
+            {
+                mScrollView.smoothScrollTo(0, mTextHistory.getBottom());
+            }
+        });
     }
 }

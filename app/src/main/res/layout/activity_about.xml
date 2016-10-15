@@ -17,7 +17,7 @@
         android:id="@+id/textTitle" />
 
     <TextView
-        android:text="Authors:\nBrandon Garling\nTanner Stevens\n\nHow to Play:\nDo the stuff with the letters and create words. Real words."
+        android:text="Authors:\nBrandon Garling\nTanner Stevens\n\nHow to Play:\nSelect letters to create words. Real words."
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:layout_marginTop="35dp"
@@ -29,7 +29,7 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/textTitle"
         android:background="#FFFFFF"
-        android:textColor="#000000" />
+        android:textColor="#222222" />
 
     <Button
         android:text="Back"

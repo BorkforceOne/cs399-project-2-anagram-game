@@ -12,17 +12,68 @@
         android:text="Anagramz"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
         android:textSize="75sp"
         android:id="@+id/textTitle" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/textTitle"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical"
+        android:id="@+id/progressLayout">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#00000000"
+            android:textAlignment="center"
+            android:id="@+id/timeString"
+            />
+
+        <ProgressBar
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/timeProgressBar"
+            android:max="30000"
+            android:progress="30000"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            />
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/historyScroller"
+        android:layout_margin="10dp"
+        android:layout_width="fill_parent"
+        android:layout_height="80dp"
+        android:layout_below="@id/progressLayout"
+        android:scrollbars="vertical"
+        android:background="#FFFFFF">
+
+        <TextView
+            android:paddingStart="10dp"
+            android:paddingLeft="10dp"
+            android:paddingEnd="10dp"
+            android:paddingRight="10dp"
+            android:id="@+id/historyText"
+            android:textColor="#222222"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"/>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_below="@id/historyScroller"
+        android:minHeight="100dp"
         android:id="@+id/guessLinearLayout">
 
         <TextView
@@ -41,7 +92,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:minHeight="100dp"
             android:id="@+id/guessLettersLayout">
 
         </org.apmem.tools.layouts.FlowLayout>
@@ -51,7 +101,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/guessLinearLayout"
-        android:paddingBottom="90dp"
+        android:minHeight="100dp"
         android:orientation="vertical">
         <TextView
             android:text="Letter Rack"
@@ -66,7 +116,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:minHeight="100dp"
             android:id="@+id/inputLettersLayout">
         </org.apmem.tools.layouts.FlowLayout>
     </LinearLayout>
@@ -75,19 +124,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Submit"
-        android:layout_above="@id/guessLinearLayout"
+        android:layout_alignParentBottom="true"
         android:layout_marginBottom="30dp"
         android:layout_centerHorizontal="true"
         android:onClick="checkAnagram"/>
-
-    <ProgressBar
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textTitle"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/progressBar4"
-        android:max="30000"
-        android:progress="30000" />
 
 </RelativeLayout>

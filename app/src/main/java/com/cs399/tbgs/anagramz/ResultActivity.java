@@ -1,8 +1,12 @@
 package com.cs399.tbgs.anagramz;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class ResultActivity extends AppCompatActivity {
 
@@ -11,14 +15,38 @@ public class ResultActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
 
-        TextView correctTV = (TextView)findViewById(R.id.CorrectTextView);
-        correctTV.setText(correctTV.getText()+getIntent().getExtras().getString("foundWords"));
-        TextView incorrectTV = (TextView)findViewById(R.id.IncorrectTextView);
-        incorrectTV.setText(incorrectTV.getText()+getIntent().getExtras().getString("incorrectWords"));
-        /*TextView missedTV = (TextView)findViewById(R.id.RemainingTextView);
-        missedTV.setText(missedTV.getText()+getIntent().getExtras().getString("nMissedWords"));
+        ArrayList<String> correctWords = getIntent().getExtras().getStringArrayList("correctWords");
+        ArrayList<String> incorrectWords = getIntent().getExtras().getStringArrayList("incorrectWords");
 
-        TextView missedWordsTV = (TextView)findViewById(R.id.MissedTextView);
-        missedWordsTV.setText(getIntent().getExtras().getString("missedWords"));*/
+        TextView correctTV = (TextView)findViewById(R.id.CorrectTextView);
+        TextView incorrectTV = (TextView)findViewById(R.id.IncorrectTextView);
+        TextView correctWordsTV = (TextView)findViewById(R.id.correctWordsText);
+        TextView incorrectWordsTV = (TextView)findViewById(R.id.incorrectWordsText);
+
+        correctTV.append(Integer.toString(correctWords.size()));
+        incorrectTV.append(Integer.toString(incorrectWords.size()));
+
+
+        String newLine = "";
+        for (String word: correctWords) {
+            correctWordsTV.append(newLine + word);
+            newLine = "\n";
+        }
+
+        newLine = "";
+        for (String word: incorrectWords) {
+            incorrectWordsTV.append(newLine + word);
+            newLine = "\n";
+        }
+    }
+
+    public void finishGotoChallengeSelection(View view) {
+        Intent intent = new Intent(this, ChallengeSelectionActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void exitApp(View view) {
+        System.exit(0);
     }
 }
