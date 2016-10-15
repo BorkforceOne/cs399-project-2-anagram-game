@@ -138,6 +138,7 @@ public class GameActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ResultActivity.class);
         intent.putStringArrayListExtra("correctWords", correctWords);
         intent.putStringArrayListExtra("incorrectWords", incorrectWords);
+        finish();
         startActivity(intent);
     }
 

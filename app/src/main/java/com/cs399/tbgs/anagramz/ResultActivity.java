@@ -47,7 +47,7 @@ public class ResultActivity extends AppCompatActivity {
     }
 
     public void exitApp(View view) {
-        System.exit(0);
+        finish();
     }
 
     public void gotoChallenge(View view){
