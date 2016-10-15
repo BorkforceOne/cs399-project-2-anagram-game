@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void gotoChallengeSelection(View view) {
         Intent intent = new Intent(this, ChallengeSelectionActivity.class);
+        finish();
         startActivity(intent);
     }
 }

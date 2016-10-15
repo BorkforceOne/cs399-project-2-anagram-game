@@ -23,6 +23,7 @@ public class ChallengeSelectionActivity extends AppCompatActivity {
         EditText et=(EditText)findViewById(R.id.seedText);
         Intent intent = new Intent(this, GameActivity.class);
         intent.putExtra("challengeSeed", et.getText().toString());
+        finish();
         startActivity(intent);
     }
 }

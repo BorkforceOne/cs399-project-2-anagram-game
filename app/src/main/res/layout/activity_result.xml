@@ -60,6 +60,13 @@ android:orientation="vertical">
             android:layout_height="wrap_content"
             android:paddingBottom="20dp"
             android:id="@+id/TotalTextView" />
+
+        <Button
+            android:text="Play Again!"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/playagain"
+            android:onClick="gotoChallenge"/>
     </LinearLayout>
     <RelativeLayout
         android:layout_width="match_parent"

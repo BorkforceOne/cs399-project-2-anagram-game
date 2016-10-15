@@ -42,6 +42,7 @@ public class GameActivity extends AppCompatActivity {
         incorrectWords = new ArrayList<String>();
 
         String challengeSeed = getIntent().getExtras().getString("challengeSeed");
+        System.out.println(challengeSeed.hashCode());
 
         // Create and setup our random number generator
         this.random = new Random(challengeSeed.hashCode());
@@ -127,6 +128,7 @@ public class GameActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ResultActivity.class);
         intent.putExtra("foundWords", ""+correctWords.size());
         intent.putExtra("incorrectWords", ""+incorrectWords.size());
+        finish();
         startActivity(intent);
     }
 
